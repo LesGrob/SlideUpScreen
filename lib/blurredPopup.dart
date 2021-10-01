@@ -7,12 +7,17 @@ class BlurredPopup extends PopupRoute<Null> {
   static const double frostAnimationStartValue = 3.0;
   static const double frostAnimationEndValue = 3.0;
 
-  late final Widget screen;
+  final Widget screen;
 
-  BlurredPopup({required this.screen});
-  BlurredPopup.withSlideUp({required SlideUpScreen screen}) {
-    this.screen = screen;
-  }
+  BlurredPopup(
+      {required this.screen, RouteSettings? settings, ImageFilter? filter})
+      : super(filter: filter, settings: settings);
+
+  BlurredPopup.withSlideUp(
+      {required SlideUpScreen screen,
+      RouteSettings? settings,
+      ImageFilter? filter})
+      : this(screen: screen, filter: filter, settings: settings);
 
   @override
   Color get barrierColor => Colors.black.withOpacity(0.32);
@@ -42,21 +47,4 @@ class BlurredPopup extends PopupRoute<Null> {
   Widget buildPage(BuildContext context, Animation<double> animation,
           Animation<double> secondaryAnimation) =>
       screen;
-}
-
-class BlurTransition extends AnimatedWidget {
-  final Widget child;
-  final Animation<double> animation;
-
-  BlurTransition({required this.animation, required this.child})
-      : super(listenable: animation);
-
-  @override
-  Widget build(BuildContext context) {
-    return new BackdropFilter(
-      filter: new ImageFilter.blur(
-          sigmaX: animation.value, sigmaY: animation.value),
-      child: child,
-    );
-  }
 }

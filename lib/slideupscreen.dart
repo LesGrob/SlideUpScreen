@@ -46,51 +46,51 @@ abstract class SlideUpScreenState<T extends SlideUpScreen> extends State<T> {
   @protected
   @override
   Widget build(BuildContext context) {
-    final double statusBarHeight = MediaQuery.of(context).padding.top;
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Expanded(child: _body),
+          _bottomBlock,
+        ],
+      ),
+    );
+  }
 
-    Widget bottomBlock = Container();
-    if (this.bottomBlock(context) != null) {
-      bottomBlock = this.bottomBlock(context)!;
+  Widget get _bottomBlock {
+    if (this.bottomBlock(context) == null) {
+      return Container();
     }
+    return this.bottomBlock(context)!;
+  }
 
-    var body = Column(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        Expanded(
+  Widget get _body {
+    return Container(
+      alignment: Alignment.bottomCenter,
+      child: Container(
+        decoration: BoxDecoration(
+            color: backgroundColor,
+            borderRadius: BorderRadius.vertical(top: topRadius)),
+        margin: EdgeInsets.only(
+          top: topOffset + MediaQuery.of(context).padding.top,
+        ),
+        child: SingleChildScrollView(
+          clipBehavior: Clip.none,
+          controller: _scrollController,
+          physics:
+              AlwaysScrollableScrollPhysics(parent: BouncingScrollPhysics()),
           child: Container(
-            alignment: Alignment.bottomCenter,
-            child: Container(
-              decoration: BoxDecoration(
-                  color: backgroundColor,
-                  borderRadius: BorderRadius.vertical(top: topRadius)),
-              margin: EdgeInsets.only(
-                top: topOffset + statusBarHeight,
-              ),
-              child: SingleChildScrollView(
-                clipBehavior: Clip.none,
-                controller: _scrollController,
-                physics: AlwaysScrollableScrollPhysics(
-                    parent: BouncingScrollPhysics()),
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: backgroundColor,
-                      borderRadius: BorderRadius.vertical(top: topRadius)),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.vertical(top: topRadius),
-                    child: this.body(context),
-                  ),
-                ),
-              ),
+            decoration: BoxDecoration(
+                color: backgroundColor,
+                borderRadius: BorderRadius.vertical(top: topRadius)),
+            child: ClipRRect(
+              borderRadius: BorderRadius.vertical(top: topRadius),
+              child: this.body(context),
             ),
           ),
         ),
-        bottomBlock,
-      ],
-    );
-
-    return Scaffold(
-      backgroundColor: Colors.transparent,
-      body: body,
+      ),
     );
   }
 }
