@@ -46,15 +46,12 @@ abstract class SlideUpScreenState<T extends SlideUpScreen> extends State<T> {
   @protected
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.transparent,
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          Expanded(child: _body),
-          _bottomBlock,
-        ],
-      ),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        Expanded(child: _body),
+        _bottomBlock,
+      ],
     );
   }
 
