@@ -1,7 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:slideupscreen/slideupscreen.dart';
+import 'package:slideupscreen/index.dart';
 
 class BlurredPopup<T> extends PopupRoute<T> {
   static const double frostAnimationStartValue = 3.0;
